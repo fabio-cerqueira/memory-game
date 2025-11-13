@@ -1,0 +1,60 @@
+Introdução ao Projeto
+Seja bem-vindo ao checkpoint do módulo Lógica e JavaScript. O objetivo deste checkpoint é construir um 'jogo da memória' em JavaScript, utilizando os seguintes recursos aprendidos:
+
+Coleções de dados.
+Arrays
+Estruturas condicionais
+Estruturas de repetição
+readline-sync
+A missão
+O seu objetivo nesse checkpoint é:
+
+Construir um jogo da memória em JavaScript;
+O jogo usa node e vai rodar diretamente do terminal;
+O jogo terá 8 pares de cartas, que serão numeradas de 1 à 16;
+O jogador utilizará o input de dados (readline-sync) para informar o número da carta que vai virar.
+Requisitos do projeto
+O projeto possui alguns requisitos que podem ser vistos abaixo:
+
+Requisitos
+O jogo da memória deve ser feito em JavaScript
+O jogo deverá rodar no terminal
+O jogo da memória utilizará emojis como cartas
+O jogo terá 8 pares, 16 cartas no total (2 de cada)
+Por padrão, todas as cartas começam viradas para baixo, mostrando seu número de identificação.
+
+Ao digitar um número, a carta correspondente é virada e o emoji é mostrado. Ao escolher a segunda carta, poderá ocorrer uma das situações abaixo:
+
+A segunda carta é diferente da primeira; a tela é limpa, o tabuleiro é recriado com as duas cartas viradas novamente para baixo e o jogador pode escolher novamente.
+A segunda carta é igual à primeira; nesse caso as duas cartas permanecem para cima. Aqui também existem dois possíveis desdobramentos:
+Se esse for o último par, ou seja, não houverem mais cartas viradas para baixo, o jogo acaba e o jogador vence.
+Se esse não for o último par, ou seja, ainda houver cartas viradas para baixo, a tela será limpa, o tabuleiro será recriado com o estado atual (pares já acertados para cima e os demais para baixo) e o jogador será solicitado a escolher novamente.
+Se o jogador errar por 5 vezes consecutivas, ou seja, não acertar nenhuma combinação após 5 tentativas, o jogo acaba e o jogador perde.
+Emojis
+O jogo da memória em JavaScript vai usar emoji para representar as cartas. O JavaScript suporta o uso de emojis diretamente no código, de forma nativa.
+
+Isso significa que você pode, por exemplo, armazenar um emoji dentro de um array ou uma variável.
+
+Abaixo você pode conferir o array de emojis que vamos utilizar como cartas no projeto:
+
+const emojis = ["🐱", "🐶", "🍎", "🍌", "⚽", "🏀", "🌟", "✨"];
+Os emojis também são suportados nativamente no terminal. Em terminais modernos eles aparecerão coloridos, e em outros mais simples vão aparecer em preto e branco.
+
+Exemplo de emojis no terminal
+Figura 2. Exemplo de emojis no terminal
+Você pode utilizar outros emojis se preferir, mas o array deve ter 8 deles diferentes, que serão posteriormente duplicados no código para formar os pares.
+
+Requisitos de Layout
+Abaixo você pode conferir algumas imagens do projeto em execução. Você pode utilizar essas imagens como base para seu layout, ou pode até mesmo replicá-las, mas também é livre para organizar de outra forma se preferir.
+
+Link para o layout
+Cartas viradas para baixo
+Figura 3. Cartas viradas para baixo
+Duas cartas diferentes
+Figura 4. Duas cartas diferentes
+Duas iguais permanecem
+Figura 5. Duas iguais permanecem
+Jogo concluído
+Figura 5. Jogo concluído
+Importante!
+A cada rodada, ou seja, sempre após selecionar duas cartas, a tela deve ser limpa e o tabuleiro deve ser recriado.
