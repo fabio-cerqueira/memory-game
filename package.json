@@ -3,10 +3,15 @@
   "version": "1.0.0",
   "description": "Um jogo da memória simples e divertido feito em **JavaScript puro**, utilizando emojis no lugar das tradicionais cartas.  \r O objetivo é encontrar todos os pares iguais no menor número de jogadas possível!",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": ["jogo", "memória", "JavaScript"],
+  "keywords": [
+    "jogo",
+    "memória",
+    "JavaScript"
+  ],
   "author": "Fabio Morais Cerqueira",
   "license": "ISC",
   "dependencies": {

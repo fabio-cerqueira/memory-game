@@ -1,4 +1,4 @@
-import entradaDados, { question } from 'readline-sync';
+import entradaDados from 'readline-sync';
 
 
 // DATABASE
@@ -47,20 +47,21 @@ async function playGame() {
   while (matchedPairs < totalPairs && remainingAttempts > 0) {
     showBoard();
     const pick1 = entradaDados.question("Escolha o primeiro numero:");
-    const pick2 = entradaDados.question("Escolha o segundo numero:");
-
     const card1 = boardState.find(c => c.id === pick1);
-    const card2 = boardState.find(c => c.id === pick2);
+    card1.revealed = true;
+    showBoard();
 
+    const pick2 = entradaDados.question("Escolha o segundo numero:");
+    const card2 = boardState.find(c => c.id === pick2);
+    card2.revealed = true;
+    showBoard();
+    
     if (!card1 || !card2 || card1.matched || card2.matched || pick1 === pick2) {
       console.log("Escolha inválida! Tente novamente.");
       continue;
     }
 
     // Temporarily reveals
-    card1.revealed = true;
-    card2.revealed = true;
-    showBoard();
 
     if (card1.emoji === card2.emoji) {
       console.log("Par encontrado!");
@@ -72,7 +73,7 @@ async function playGame() {
       console.log("Não foi dessa vez!");
       console.log(`Você ainda tem ${remainingAttempts} tentativa(s)`)
       // Short pause before hiding again
-      await new Promise(r => setTimeout(r, 1000));
+      await new Promise(r => setTimeout(r, 2000));
       card1.revealed = false;
       card2.revealed = false;
     }
