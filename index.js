@@ -1,16 +1,13 @@
-import entradaDados from 'readline-sync';
-
+import entradaDados from "readline-sync";
 
 // DATABASE
-const emojis = ["🐱", "🐶", "🍎", "🍌", "⚽", "🏀", "🌟", "✨"]
-
+const emojis = ["🐱", "🐶", "🍎", "🍌", "⚽", "🏀", "🌟", "✨"];
 
 // MIX THE EMOJIS
 function shuffle(array) {
-  array.sort(() => Math.random() - 0.5)
+  array.sort(() => Math.random() - 0.5);
   return array;
 }
-
 
 // ASSEMBLE THE BOARD
 const emojisBoard = shuffle([...emojis, ...emojis]);
@@ -18,9 +15,8 @@ let boardState = emojisBoard.map((emoji, index) => ({
   id: String(index + 1).padStart(2, "0"),
   emoji,
   revealed: false,
-  matched: false
+  matched: false,
 }));
-
 
 // SHOW BOARD
 function showBoard() {
@@ -29,7 +25,9 @@ function showBoard() {
   for (let i = 0; i < boardState.length; i += columns) {
     const row = boardState
       .slice(i, i + columns)
-      .map(cell => (cell.revealed || cell.matched) ? `[ ${cell.emoji} ]` : `[ ${cell.id} ]`)
+      .map((cell) =>
+        cell.revealed || cell.matched ? `[ ${cell.emoji} ]` : `[ ${cell.id} ]`
+      )
       .join(" ");
 
     board += "  " + row + "\n";
@@ -37,25 +35,57 @@ function showBoard() {
   console.log(board);
 }
 
+// VALIDATE NUMBERS
+
+function isValidPick(pick) {
+  const number = Number(pick);
+  return Number.isInteger(number) && number >= 1 && number <= 16;
+}
 
 // MAIN FUNCTION OF THE GAME
 async function playGame() {
   let matchedPairs = 0;
-  let remainingAttempts = 5
+  let remainingAttempts = 5;
   const totalPairs = emojis.length;
 
   while (matchedPairs < totalPairs && remainingAttempts > 0) {
     showBoard();
-    const pick1 = entradaDados.question("Escolha o primeiro numero:");
-    const card1 = boardState.find(c => c.id === pick1);
+    const pick1 = entradaDados.question("Escolha o primeiro numero: ");
+
+    if (!isValidPick(pick1)) {
+      console.log("Opção inválida! Escolha um número entre 1 e 16.");
+      continue;
+    }
+
+    const card1 = boardState.find((c) => c.id === pick1);
+
+    if (!card1 || card1.matched) {
+      console.log("Carta inválida ou já encontrada. Tente novamente.");
+      continue;
+    }
+
     card1.revealed = true;
     showBoard();
 
-    const pick2 = entradaDados.question("Escolha o segundo numero:");
-    const card2 = boardState.find(c => c.id === pick2);
+    const pick2 = entradaDados.question("Escolha o segundo numero: ");
+
+    if (!isValidPick(pick2)) {
+      card1.revealed = false;
+      console.log("Opção inválida! Escolha um número entre 1 e 16.");
+      continue;
+    }
+
+    const card2 = boardState.find((c) => c.id === pick2);
+
+    if (!card2 || card2.matched || pick1 === pick2) {
+      card1.revealed = false;
+      console.log("Escolha inválida! Tente novamente.");
+      continue;
+    }
+
     card2.revealed = true;
     showBoard();
-    
+
     if (!card1 || !card2 || card1.matched || card2.matched || pick1 === pick2) {
       console.log("Escolha inválida! Tente novamente.");
       continue;
@@ -69,23 +99,22 @@ async function playGame() {
       card2.matched = true;
       matchedPairs++;
     } else {
-      remainingAttempts--
+      remainingAttempts--;
       console.log("Não foi dessa vez!");
-      console.log(`Você ainda tem ${remainingAttempts} tentativa(s)`)
+      console.log(`Você ainda tem ${remainingAttempts} tentativa(s)`);
       // Short pause before hiding again
-      await new Promise(r => setTimeout(r, 2000));
+      await new Promise((r) => setTimeout(r, 2000));
       card1.revealed = false;
       card2.revealed = false;
     }
   }
-    
+
   if (matchedPairs == totalPairs) {
     console.log("Parabéns! Você encontrou todos os pares!");
   } else if (remainingAttempts == 0) {
     console.log("Suas tentativas acabaram. Você perdeu o jogo!!!");
   }
 }
-
 
 // START THE GAME
 playGame();
